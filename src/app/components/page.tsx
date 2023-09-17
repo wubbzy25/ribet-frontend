@@ -13,7 +13,7 @@ export default function ErrorPage() {
                     Contact Support
                 </a>
             </div>
-        </div>
+        </div>  
     </main>
     )
 }
