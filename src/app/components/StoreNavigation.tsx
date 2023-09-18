@@ -1,6 +1,7 @@
 'use client';
   import { Fragment, useState } from 'react'
   import logo from '../../../public/logo.jpg'
+  import ShoppingCart from './ShoppingCart';
   import español from '../../../public/español.jpg'
   import mujer from '../../../public/mujer.jpg'
   import mujer2 from '../../../public/mujer2.jpg'
@@ -169,11 +170,12 @@
   }
 
   export default function StoreNavigation() {
-
     const [open, setOpen] = useState(false)
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     return (
       <div className="bg-white">
+        {isCartOpen && <ShoppingCart />}
         {/* Mobile menu */}
         <Transition.Root show={open} as={Fragment}>
           <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -233,7 +235,7 @@
                     </div>
                     <Tab.Panels as={Fragment}>
                       {navigation.categories.map((category) => (
-                        <Tab.Panel key={category.name} className="space-y-10 px-4 pb-8 pt-10">
+                        <Tab.Panel key={category.name} className="space-y-10 px-4 pb-8 pt-10 z-[100]">
                           <div className="grid grid-cols-2 gap-x-4">
                             {category.featured.map((item) => (
                               <div key={item.name} className="group relative text-sm">
@@ -339,7 +341,7 @@
                                   open
                                     ? 'border-indigo-600 text-indigo-600'
                                     : 'border-transparent text-gray-700 hover:text-gray-800',
-                                  'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
+                                  'relative z-40 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
                                 )}
                               >
                                 {category.name}
@@ -359,7 +361,7 @@
                                 {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                 <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
 
-                                <div className="relative bg-white">
+                                <div className="relative bg-white z-[100]">
                                   <div className="mx-auto max-w-7xl px-8">
                                     <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
                                       <div className="col-start-2 grid grid-cols-2 gap-x-8">
@@ -376,7 +378,7 @@
                                           </div>
                                         ))}
                                       </div>
-                                      <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
+                                      <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm ">
                                         {category.sections.map((section) => (
                                           <div key={section.name}>
                                             <p id={`${section.name}-heading`} className="font-medium text-gray-900">
@@ -448,6 +450,7 @@
                       <ShoppingBagIcon
                         className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         aria-hidden="true"
+                        onClick={() => setIsCartOpen(!isCartOpen)} 
                       />
                       <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                       <span className="sr-only">items in cart, view bag</span>
